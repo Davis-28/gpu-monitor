@@ -1,0 +1,53 @@
+C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\agent.py:18: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml
+Traceback (most recent call last):
+  File "C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\.venv\Lib\site-packages\pynvml.py", line 2948, in _LoadNvmlLibrary
+    nvmlLib = CDLL(os.path.join(os.getenv("WINDIR", "C:/Windows"), "System32/nvml.dll"))
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\ctypes\__init__.py", line 361, in __init__
+    self._handle = self._load_library(name, mode, handle, winmode)
+                   ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\ctypes\__init__.py", line 379, in _load_library
+    return _LoadLibrary(self._name, winmode)
+FileNotFoundError: Could not find module 'C:\WINDOWS\System32\nvml.dll' (or one of its dependencies). Try using the full path with constructor syntax.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\.venv\Lib\site-packages\pynvml.py", line 2952, in _LoadNvmlLibrary
+    nvmlLib = CDLL(os.path.join(os.getenv("ProgramFiles", "C:/Program Files"), "NVIDIA Corporation/NVSMI/nvml.dll"))
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\ctypes\__init__.py", line 361, in __init__
+    self._handle = self._load_library(name, mode, handle, winmode)
+                   ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\ctypes\__init__.py", line 379, in _load_library
+    return _LoadLibrary(self._name, winmode)
+FileNotFoundError: Could not find module 'C:\Program Files\NVIDIA Corporation\NVSMI\nvml.dll' (or one of its dependencies). Try using the full path with constructor syntax.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\agent.py", line 19, in <module>
+    pynvml.nvmlInit()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\.venv\Lib\site-packages\pynvml.py", line 2927, in nvmlInit
+    nvmlInitWithFlags(0)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\.venv\Lib\site-packages\pynvml.py", line 2910, in nvmlInitWithFlags
+    _LoadNvmlLibrary()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\.venv\Lib\site-packages\pynvml.py", line 2957, in _LoadNvmlLibrary
+    _nvmlCheckReturn(NVML_ERROR_LIBRARY_NOT_FOUND)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\.venv\Lib\site-packages\pynvml.py", line 1083, in _nvmlCheckReturn
+    raise NVMLError(ret)
+pynvml.NVMLError_LibraryNotFound: NVML Shared Library Not Found
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Eduardo\Downloads\gpu-monitor\gpu-monitor\agent\agent.py", line 26, in <module>
+    print(f"\u26a0\ufe0f  Simulando {GPU_COUNT} GPUs")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 0-1: character maps to <undefined>

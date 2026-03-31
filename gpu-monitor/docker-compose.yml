@@ -1,0 +1,63 @@
+version: "3.9"
+
+# ============================================================
+#  GPU Monitor — Docker Compose
+#  Uso: docker compose up --build
+# ============================================================
+
+services:
+
+  # ── Backend ────────────────────────────────────────────────
+  backend:
+    build: ./backend
+    container_name: gpu-monitor-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - gpu_data:/data          # Persiste o banco SQLite
+    environment:
+      DB_PATH: /data/gpu_metrics.db
+      SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-}
+      ALERT_COOLDOWN_MINUTES: ${ALERT_COOLDOWN_MINUTES:-10}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ── Agent ──────────────────────────────────────────────────
+  agent:
+    build: ./agent
+    container_name: gpu-monitor-agent
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      BACKEND_URL: http://backend:8000
+      SEND_INTERVAL: ${SEND_INTERVAL:-5}
+      GPU_COST_PER_HOUR: ${GPU_COST_PER_HOUR:-2.50}
+      MACHINE_ID: ${MACHINE_ID:-machine-01}
+    # Para GPU NVIDIA real, descomente as linhas abaixo:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # ── Frontend ───────────────────────────────────────────────
+  frontend:
+    build: ./frontend
+    container_name: gpu-monitor-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  gpu_data:
+    name: gpu-monitor-data
